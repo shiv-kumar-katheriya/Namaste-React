@@ -1,11 +1,12 @@
 import HeaderComponent from "./HeaderComponent";
-import Body from "./Body"
+// import Body from "./Body"
+import { Outlet } from "react-router-dom";
 
 const AppLayout = ()=>{
     return (
         <div className="app">
             <HeaderComponent />
-            <Body />
+            <Outlet />
         </div>
     )
 }
