@@ -3,7 +3,7 @@ import  ReactDOM  from "react-dom/client";
 
 
 import AppLayout from "./components/AppLayout";
-import About from "./components/about";
+import About from "./components/About";
 
 import  {createBrowserRouter, RouterProvider} from "react-router-dom";
 import Contact from "./components/Contact";

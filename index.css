@@ -79,3 +79,10 @@
 .res-logo{
     width: 100%;
 }
+
+
+.about-card{
+    border : 2px solid black;
+    padding: 5px;
+    margin-top: 10px;
+}
