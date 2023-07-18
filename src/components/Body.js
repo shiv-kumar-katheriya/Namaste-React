@@ -3,18 +3,17 @@ import restaurentList from "../utils/resList";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
 import { Link } from "react-router-dom";
+import useOnlineStatus from "../utils/useOnlineStatus";
 
 
 
 
 const Body = ()=> {
-    console.log("Inside body");
     let [res,setRes] =  useState([]);
     let [searchText, setSearchText] = useState("");
     let [displayList, setDisplayList] = useState([]);
 
     useEffect(()=>{
-        console.log("Inside useEffect");
         (async ()=>{
             let json = await fetch("http://localhost:3000/restaurentList");
             json = await json.json()
@@ -24,7 +23,11 @@ const Body = ()=> {
         })()    
     },[])
 
+    const onlineStatus = useOnlineStatus();
 
+    if(!onlineStatus) {
+        return <h1>You Are Not Connected With Internet Try reconnecting with the Internet</h1>
+    }
 
 
     if(res.length === 0){
@@ -35,7 +38,7 @@ const Body = ()=> {
     }
     
     return (
-    
+        
         <div className="body">
             <div className="search">
 

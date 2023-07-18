@@ -1,23 +1,12 @@
-import { useEffect, useState } from "react";
+
+import useRestaurentInfo from "../utils/useRestaurentInfo";
 import Shimmer from "./Shimmer";
 import { useParams } from "react-router-dom";
-import { RestaurentIdURL } from "../utils/resImg";
 
 const RestaurentMenu = ()=>{
     
-    const [menuData,setMenuData] = useState("");
     const param = useParams();
-
-    useEffect(()=>{
-        fetchMenu();
-    },[])
-
-    const fetchMenu = async ()=>{
-        const data = await fetch(RestaurentIdURL+param?.resId);
-        const menu = await data.json();
-        setMenuData(menu?.data?.cards);
-    }
-    
+    const menuData  =  useRestaurentInfo(param?.resId);
     
     if(menuData.length == 0){
         return <div>
@@ -39,9 +28,7 @@ const RestaurentMenu = ()=>{
         <div>
             <h1>{menuData[0]?.card?.card.info?.name}</h1>
             <ul>
-                {   
-                  displayData(listOfMenuItem) 
-                }    
+                { displayData(listOfMenuItem) }    
             </ul>
         </div>
     )
