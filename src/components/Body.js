@@ -1,4 +1,4 @@
-import  RestaurentCard from "./RestaurentCard";
+import  RestaurentCard, {withPromotedLabel} from "./RestaurentCard";
 import restaurentList from "../utils/resList";
 import { useEffect, useState } from "react";
 import Shimmer from "./Shimmer";
@@ -25,6 +25,8 @@ const Body = ()=> {
 
     const onlineStatus = useOnlineStatus();
 
+    const PromotedRestaurentCard = withPromotedLabel(RestaurentCard);
+
     if(!onlineStatus) {
         return <h1>You Are Not Connected With Internet Try reconnecting with the Internet</h1>
     }
@@ -39,16 +41,16 @@ const Body = ()=> {
     
     return (
         
-        <div className="body">
-            <div className="search">
+        <div className="py-4">
+            <div className="flex justify-start px-40">
 
-                <div>
-                    <input  type="text" value={searchText} onChange ={
+                <div className="my-2 px-2">
+                    <input className="border border-black px-4 py-1 rounded-md" type="text" value={searchText} onChange ={
                         (e)=>setSearchText(e.target.value)
                     } />
                 </div> 
-                <div>
-                    <button className="searchBtn" onClick={
+                <div className="my-2 px-2">
+                    <button className="border-spacing-6 px-4 py-1 rounded-lg hover:text-gray-100 bg-indigo-700 text-lg font-bold " onClick={
                         ()=>{
                             filteredList =   res.filter(item => {
                                 return item.data.name.toLowerCase().includes(searchText.toLowerCase())
@@ -60,8 +62,8 @@ const Body = ()=> {
                     }>Search</button>
                 </div>
 
-                <div>
-                    <button className="filter-btn" onClick={()=>{
+                <div className="my-2 px-2">
+                    <button className="border-spacing-6 px-4 py-1 rounded-lg hover:text-gray-100 bg-pink-500 text-lg font-bold "  onClick={()=>{
                         filterResList = res.filter(restra => restra.data.avgRating > 4)
                         console.log("res is : ",res);
                         setDisplayList(filterResList);
@@ -70,10 +72,13 @@ const Body = ()=> {
                 </div>
             </div>
             {/* {console.log("restaurent :: ",displayList)} */}
-            <div className="res-container">
+            <div className="flex flex-wrap px-4 justify-center">
                 {
                     displayList.map(
-                        restaurent =>     <Link  to={"/restaurent/"+restaurent.data.id} key={restaurent.id}> <RestaurentCard  resData = {restaurent} /> </Link>
+                        restaurent =>     
+                            <Link  to={"/restaurent/"+restaurent.data.id} key={restaurent.data.id}> 
+                                { restaurent.data.promoted ? <PromotedRestaurentCard  resData = {restaurent} />  : <RestaurentCard  resData = {restaurent} /> }    
+                            </Link>
                     )
                 }    
             </div>
